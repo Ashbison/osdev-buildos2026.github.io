@@ -2,81 +2,523 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OSDev - We Build 2026</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>OSDev · We Build 2026</title>
     <style>
-        :root {
-            --bg: #0d1117;
-            --text: #c9d1d9;
-            --accent: #58a6ff;
-            --code-bg: #161b22;
-        }
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
+        /* RESET & GLOBAL — Midnight Hacker Aesthetic */
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
-        header {
-            border-bottom: 1px solid #30363d;
+
+        body {
+            background-color: #0d1117;
+            color: #c9d1d9;
+            font-family: 'Fira Code', 'JetBrains Mono', 'SF Mono', 'Cascadia Code', monospace;
+            font-size: 16px;
+            line-height: 1.5;
             padding: 2rem 1rem;
-            text-align: center;
         }
-        h1 { color: var(--accent); margin: 0; font-size: 2.5rem; }
-        .container { max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
-        .post-preview {
-            background: var(--code-bg);
+
+        /* smooth scroll & selection */
+        ::selection {
+            background: #00ff4133;
+            color: #00ff41;
+        }
+
+        /* main container — centered column */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* ========= HEADER SECTION ========= */
+        .hero {
+            margin-bottom: 3rem;
+            border-left: 4px solid #00ff41;
+            padding-left: 1.5rem;
+        }
+
+        .blog-title {
+            font-size: 2.8rem;
+            font-weight: 600;
+            letter-spacing: -1px;
+            background: linear-gradient(135deg, #00ff41 0%, #58a6ff 80%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 5px #00ff4120;
+            margin-bottom: 0.5rem;
+        }
+
+        .subhead {
+            font-size: 1rem;
+            color: #8b949e;
+            border-left: 2px solid #58a6ff;
+            padding-left: 1rem;
+            margin-top: 0.25rem;
+        }
+
+        /* divider with glow */
+        .divider {
+            height: 2px;
+            background: linear-gradient(90deg, #00ff41, #58a6ff, #0d1117);
+            margin: 1.8rem 0;
+            width: 100%;
+        }
+
+        /* ========= SYSTEM STATUS (side-ish / footer) ========= */
+        .status-panel {
+            background: #161b22;
             border: 1px solid #30363d;
-            border-radius: 6px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
+            border-radius: 12px;
+            padding: 1rem 1.4rem;
+            margin-bottom: 2.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 1rem;
+            backdrop-filter: blur(2px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.6);
         }
-        .post-preview h2 { margin-top: 0; color: var(--accent); }
-        .tag {
-            background: #238636;
-            color: white;
-            padding: 0.2rem 0.5rem;
-            border-radius: 3px;
-            font-size: 0.8rem;
+
+        .status-item {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+        }
+
+        .status-label {
+            color: #58a6ff;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+        }
+
+        .status-value {
+            background: #0a0c10;
+            padding: 0.2rem 0.6rem;
+            border-radius: 24px;
+            color: #00ff41;
+            border: 1px solid #2d3a3a;
+            font-weight: 500;
+        }
+
+        .led-green {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background-color: #00ff41;
+            border-radius: 50%;
+            box-shadow: 0 0 6px #00ff41;
+            margin-right: 6px;
+        }
+
+        /* ========= BLOG POST CARDS ========= */
+        .blog-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.8rem;
+            margin: 2rem 0 2.5rem;
+        }
+
+        .post-card {
+            background: #0d1117;
+            border: 1px solid #21262d;
+            border-radius: 20px;
+            padding: 1.5rem;
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 6px 12px -8px rgba(0,0,0,0.4);
+        }
+
+        .post-card:hover {
+            border-color: #00ff4166;
+            box-shadow: 0 8px 20px rgba(0, 255, 65, 0.08);
+            transform: translateY(-2px);
+            background: #0f131a;
+        }
+
+        .post-title {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #f0f6fc;
+            margin-bottom: 0.5rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .post-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+            align-items: center;
+        }
+
+        .category {
+            background: #1f2a2a;
+            color: #00ff41;
+            font-size: 0.7rem;
+            font-weight: 500;
+            padding: 0.2rem 0.7rem;
+            border-radius: 20px;
+            letter-spacing: 0.3px;
+            border: 0.5px solid #2ea043;
+            text-transform: uppercase;
+        }
+
+        .post-summary {
+            color: #b1bac4;
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+            line-height: 1.5;
+        }
+
+        /* code snippet block (high-end editor look) */
+        .code-snippet {
+            margin: 1.8rem 0 1rem 0;
+            background: #010409;
+            border-radius: 14px;
+            border: 1px solid #2d333b;
+            overflow-x: auto;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+        }
+
+        .code-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.65rem 1rem;
+            background: #0d1117;
+            border-bottom: 1px solid #21262d;
+            font-size: 0.75rem;
+            color: #8b949e;
             font-family: monospace;
         }
-        code {
-            background: #21262d;
-            padding: 0.2rem 0.4rem;
-            border-radius: 3px;
-            font-family: 'Courier New', monospace;
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
         }
-        footer { text-align: center; padding: 2rem; font-size: 0.8rem; color: #8b949e; }
+
+        .dot-red { background: #ff5f56; }
+        .dot-yellow { background: #ffbd2e; }
+        .dot-green { background: #27c93f; }
+
+        pre {
+            margin: 0;
+            padding: 1.2rem;
+            font-family: 'Fira Code', 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            color: #e6edf3;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        code {
+            font-family: inherit;
+        }
+
+        /* inline code style */
+        .inline-code {
+            background: #1a1f2b;
+            color: #58a6ff;
+            padding: 0.2rem 0.4rem;
+            border-radius: 6px;
+            font-size: 0.85em;
+            font-family: 'Fira Code', monospace;
+        }
+
+        /* footer with extra hacker touch */
+        .footer-note {
+            margin-top: 3rem;
+            text-align: center;
+            font-size: 0.75rem;
+            border-top: 1px dashed #30363d;
+            padding-top: 1.8rem;
+            color: #5c6773;
+        }
+
+        .glow-text {
+            color: #00ff41;
+            text-shadow: 0 0 2px #00ff4180;
+        }
+
+        /* responsive adjustments */
+        @media (max-width: 680px) {
+            body {
+                padding: 1rem 0.5rem;
+            }
+            .blog-title {
+                font-size: 2rem;
+            }
+            .post-title {
+                font-size: 1.3rem;
+            }
+            .status-panel {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.6rem;
+            }
+            .container {
+                padding: 0 0.5rem;
+            }
+            .hero {
+                padding-left: 1rem;
+            }
+        }
+
+        /* custom scrollbar to match vibe */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0d1117;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #30363d;
+            border-radius: 6px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00ff4155;
+        }
+
+        /* any anchors/links (optional) */
+        a {
+            color: #58a6ff;
+            text-decoration: none;
+        }
+        a:hover {
+            color: #00ff41;
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
-
-<header>
-    <h1>OSDev - We Build 2026</h1>
-    <p>Documenting the journey of low-level systems development.</p>
-</header>
-
 <div class="container">
-    <div class="post-preview">
-        <span class="tag">KERNEL</span>
-        <h2>Hello, World! Booting from the BIOS</h2>
-        <p>Our first milestone: getting a simple bootloader to print text using <code>INT 10h</code>.</p>
-        <small>Posted on April 27, 2026</small>
+    <!-- HEADER with neon title -->
+    <div class="hero">
+        <h1 class="blog-title">OSDev - We Build 2026</h1>
+        <div class="subhead">Low-level systems development journal.</div>
     </div>
 
-    <div class="post-preview">
-        <span class="tag">GDT</span>
-        <h2>Setting up the Global Descriptor Table</h2>
-        <p>Moving from Real Mode to Protected Mode requires a solid GDT configuration.</p>
-        <small>Posted on April 20, 2026</small>
+    <!-- SYSTEM STATUS panel (sidebar-like, displayed as prominent widget) -->
+    <div class="status-panel">
+        <div class="status-item">
+            <span class="status-label">⟠ KERNEL</span>
+            <span class="status-value">v2026.04.27-rc2</span>
+        </div>
+        <div class="status-item">
+            <span class="status-label">⚙️ BUILD DATE</span>
+            <span class="status-value">2026-04-27 03:14 UTC</span>
+        </div>
+        <div class="status-item">
+            <span class="led-green"></span>
+            <span class="status-label">SYSTEM STATUS</span>
+            <span class="status-value">ACTIVE · PANEL OK</span>
+        </div>
+        <div class="status-item">
+            <span class="status-label">💾 TARGET</span>
+            <span class="status-value">x86_64 / UEFI</span>
+        </div>
+    </div>
+
+    <!-- BLOG POST CARDS (three placeholders with high technical simplicity) -->
+    <div class="blog-list">
+        <!-- POST 1 : Bootloader deep dive -->
+        <article class="post-card">
+            <h2 class="post-title">Multiboot2 & VESA early init</h2>
+            <div class="post-meta">
+                <span class="category">[Bootloader]</span>
+                <span class="category">[x86_64]</span>
+            </div>
+            <p class="post-summary">
+                Implementing a robust Multiboot2 compliant bootloader stage with framebuffer detection, 
+                A20 line enable, and entering long mode with identity paging. We discuss memory maps, 
+                ELF parsing and boot modules placement.
+            </p>
+            <!-- code snippet: x86 assembly + C style inside pre block -->
+            <div class="code-snippet">
+                <div class="code-header">
+                    <span class="dot dot-red"></span>
+                    <span class="dot dot-yellow"></span>
+                    <span class="dot dot-green"></span>
+                    <span style="margin-left: 6px;">boot.s · x86_64 AT&T / GAS</span>
+                </div>
+                <pre><code># Multiboot2 header (x86_64)
+.section .multiboot
+.align 8
+.long 0xE85250D6                 # magic
+.long 0                          # architecture (i386)
+.long header_end - header_start
+.long -(0xE85250D6 + 0 + (header_end - header_start))
+
+header_start:
+    .word 0, 0                   # required end tag
+    .long 8
+header_end:
+
+.code32
+.global _start
+_start:
+    mov $stack_top, %esp
+    push %ebx                    # multiboot info
+    push %eax                    # magic
+    call kernel_early_init
+hang:
+    hlt
+    jmp hang</code></pre>
+            </div>
+            <p class="post-summary" style="margin-top: 6px;">
+                🔧 Legacy-free bootflow — switches to long mode, sets up GDT, then jumps to main kernel.
+            </p>
+        </article>
+
+        <!-- POST 2 : Kernel memory management -->
+        <article class="post-card">
+            <h2 class="post-title">PMM & VMM: Physical Memory Allocator</h2>
+            <div class="post-meta">
+                <span class="category">[Kernel]</span>
+                <span class="category">[Memory Mgmt]</span>
+            </div>
+            <p class="post-summary">
+                Bump allocator + bitmap-based PMM for early kernel heap. Recursive page mapping for 
+                x86_64's 4-level paging. We implement a simple frame allocator and a virtual memory 
+                subsystem supporting page faults and demand paging foundations.
+            </p>
+            <div class="code-snippet">
+                <div class="code-header">
+                    <span class="dot dot-red"></span>
+                    <span class="dot dot-yellow"></span>
+                    <span class="dot dot-green"></span>
+                    <span>pmm.c · C11 / kernel internals</span>
+                </div>
+                <pre><code>// Kernel physical frame allocator (bitmap)
+#include <stdint.h>
+#include <stddef.h>
+
+static uint8_t* bitmap;
+static size_t total_frames;
+
+void pmm_init(uint64_t mmap_addr, size_t mem_size) {
+    total_frames = mem_size / FRAME_SIZE;
+    size_t bitmap_size = BITMAP_SIZE(total_frames);
+    bitmap = (uint8_t*) HIGHER_HALF_START;
+    // mark reserved regions using e820/multiboot mmap
+    for (size_t i = 0; i < total_frames; i++)
+        bitmap_set(i, 1);       // all reserved initially
+    // free usable RAM regions from boot info
+    for (each_usable_region) {
+        for (frame = base; frame < end; frame += FRAME_SIZE)
+            bitmap_clear(frame / FRAME_SIZE);
+    }
+}
+
+uintptr_t pmm_alloc_frame(void) {
+    for (size_t i = 0; i < total_frames; i++) {
+        if (!bitmap_test(i)) {
+            bitmap_set(i, 1);
+            return i * FRAME_SIZE;
+        }
+    }
+    return 0;   // OOM
+}</code></pre>
+            </div>
+        </article>
+
+        <!-- POST 3 : Interrupt handling & IDT -->
+        <article class="post-card">
+            <h2 class="post-title">IDT, Exceptions & Syscall stubs</h2>
+            <div class="post-meta">
+                <span class="category">[x86_64]</span>
+                <span class="category">[Interrupts]</span>
+            </div>
+            <p class="post-summary">
+                Designing a robust IDT (Interrupt Descriptor Table) with IST support. Handling double faults,
+                page faults, and implementing a basic syscall mechanism via <span class="inline-code">int 0x80</span> 
+                (transition to ring3). Dump registers on panic and backtrace.
+            </p>
+            <div class="code-snippet">
+                <div class="code-header">
+                    <span class="dot dot-red"></span>
+                    <span class="dot dot-yellow"></span>
+                    <span class="dot dot-green"></span>
+                    <span>isr.S · NASM/AT&T interoperability</span>
+                </div>
+                <pre><code>; Interrupt service routine stub generator (NASM)
+%macro ISR_NOERRCODE 1
+global isr%1
+isr%1:
+    cli
+    push 0          ; dummy error code
+    push %1
+    jmp isr_common_stub
+%endmacro
+
+%macro ISR_ERRCODE 1
+global isr%1
+isr%1:
+    cli
+    push %1
+    jmp isr_common_stub
+%endmacro
+
+ISR_NOERRCODE 0  ; division by zero
+ISR_NOERRCODE 14 ; page fault (with cr2)
+ISR_ERRCODE 8    ; double fault
+
+extern isr_handler
+isr_common_stub:
+    pusha
+    push ds
+    push es
+    push fs
+    push gs
+    mov ax, 0x10
+    mov ds, ax
+    mov es, ax
+    mov fs, ax
+    mov gs, ax
+    mov rax, rsp
+    push rax
+    call isr_handler
+    add rsp, 8
+    pop gs
+    pop fs
+    pop es
+    pop ds
+    popa
+    add rsp, 16
+    iretq</code></pre>
+            </div>
+        </article>
+
+        <!-- ADDITIONAL mini section: extra kernel note (no extra card, just inline vibe) -->
+        <div class="divider"></div>
+        <div style="margin: 0.5rem 0 0.8rem 0;">
+            <span style="background:#161b22; padding:0.25rem 0.8rem; border-radius:24px; font-size:0.75rem;">
+                🧩 <span class="glow-text">LATEST COMMIT</span> :: hdd ATA PIO driver + ext2 early read | next: SMP spinup
+            </span>
+        </div>
+    </div>
+
+    <!-- BONUS: a small footer that reflects build & kernel status -->
+    <div class="footer-note">
+        <span>✦ midnight hacker lab ✦ — </span>
+        <span>Current Kernel Version: <strong class="glow-text">v2026.04.27-rc2</strong> &nbsp;|&nbsp;</span>
+        <span>Build Date: <strong class="glow-text">2026-04-27 03:14 UTC</strong></span>
+        <br>
+        <span style="font-size: 0.7rem;">[ low-level systems journal · bare metal to userspace ]</span>
     </div>
 </div>
-
-<footer>
-    &copy; 2026 OSDev - We Build 2026 | Built for the future of computing.
-</footer>
-
 </body>
 </html>

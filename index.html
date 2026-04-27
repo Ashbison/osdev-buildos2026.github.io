@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSDev - We Build 2026</title>
+    <style>
+        :root {
+            --bg: #0d1117;
+            --text: #c9d1d9;
+            --accent: #58a6ff;
+            --code-bg: #161b22;
+        }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            border-bottom: 1px solid #30363d;
+            padding: 2rem 1rem;
+            text-align: center;
+        }
+        h1 { color: var(--accent); margin: 0; font-size: 2.5rem; }
+        .container { max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
+        .post-preview {
+            background: var(--code-bg);
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .post-preview h2 { margin-top: 0; color: var(--accent); }
+        .tag {
+            background: #238636;
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            font-family: monospace;
+        }
+        code {
+            background: #21262d;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        footer { text-align: center; padding: 2rem; font-size: 0.8rem; color: #8b949e; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>OSDev - We Build 2026</h1>
+    <p>Documenting the journey of low-level systems development.</p>
+</header>
+
+<div class="container">
+    <div class="post-preview">
+        <span class="tag">KERNEL</span>
+        <h2>Hello, World! Booting from the BIOS</h2>
+        <p>Our first milestone: getting a simple bootloader to print text using <code>INT 10h</code>.</p>
+        <small>Posted on April 27, 2026</small>
+    </div>
+
+    <div class="post-preview">
+        <span class="tag">GDT</span>
+        <h2>Setting up the Global Descriptor Table</h2>
+        <p>Moving from Real Mode to Protected Mode requires a solid GDT configuration.</p>
+        <small>Posted on April 20, 2026</small>
+    </div>
+</div>
+
+<footer>
+    &copy; 2026 OSDev - We Build 2026 | Built for the future of computing.
+</footer>
+
+</body>
+</html>
